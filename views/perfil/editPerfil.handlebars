@@ -1,0 +1,43 @@
+{{#each erros}}
+    <div class="alert alert-danger"> {{texto}} </div>
+{{else}}
+
+{{/each}}
+
+<div class="mt-4 text-white card bg-primary">
+    <div class="card-header bg-info ">
+        <div class="row">
+            <img src="/img/do-utilizador2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Editar Perfil</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="editPerfil">
+            <div class="form-group row">
+                <input type="hidden" name="id" value="{{usuario._id}}">
+                <label class="col-sm-2 col-form-label" for="nome">Nome do Usuário: </label>
+                <div class="col-sm-10">
+                    <input type="text" value="{{usuario.nome}}" id="nome" name="nome" class="form-control " required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="nome">E-mail do Usuário: </label>
+                <div class="col-sm-10">
+                    <input type="email" value="{{usuario.email}}" id="email" name="email" class="form-control " required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="nome">Login do Usuário: </label>
+                <div class="col-sm-10">
+                    <input type="text" value="{{usuario.nomeUsuario}}" id="login" name="login" class="form-control " required>
+                </div>
+            </div>
+
+            <br>
+            <div align="center">
+                <button type="submit" class="btn btn-secondary"> Salvar Perfil </button>
+                <button type="button" onclick="location.href = document.referrer;" class="btn btn-secondary"> Cancelar </button>
+            </div>
+        </form>
+    </div>
+</div>

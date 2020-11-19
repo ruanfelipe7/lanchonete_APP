@@ -1,0 +1,18 @@
+<div class="mt-4 text-white card bg-primary">
+    <div class="card-header bg-info ">
+        <div class="row">
+            <img src="/img/usuarios2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Deletar Usuário</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="delUsuario" method="POST">
+            <input type="hidden" name="id" value="{{usuario._id}}" >
+            <h2>Deseja realmente excluir o usuário {{usuario.nomeUsuario}} ?</h2>
+            <div align="center">
+                <button type="submit" title="Deletar Usuário" class="btn"> <img src="/img/correct.png" height="100" width="100" alt="Deletar Usuário" > </button>
+                <button type="button" onclick="location.href = document.referrer;" title="Cancelar" class="btn"> <img src="/img/cancel.png" height="100" width="100" alt="Deletar Usuário" >  </button>
+            </div>
+        </form>
+    </div>   
+</div>

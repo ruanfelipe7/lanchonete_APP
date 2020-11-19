@@ -1,0 +1,120 @@
+<div class="card">
+    <div align="center" class="card-header text-white bg-info ">
+        <div class="row">
+            <img src="/img/dinheiro2.png" alt="" width="50" height="50">
+            <h2 style="margin-left: 10px;" class="mt-1">Buscar Caixa</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="pesquisa" class="form-inline my-2 my-lg-0">
+            <label class="col-sm-2 col-form-label"> Data Inicial: </label>
+            <input id="dataInicio" name="dataInicio" class="form-control mr-sm-2" type="date">
+            <label class="col-sm-2 col-form-label"> Data Final: </label>
+            <input id="dataFinal" name="dataFinal" class="form-control mr-sm-2" type="date">
+
+            <button class="btn btn-primary my-2 my-sm-0" type="submit"><img src="/img/search.png" alt="Deletar Receita"
+                    width="20" height="20"> Buscar</button>
+        </form>
+    </div>
+</div>
+
+{{#if busca}}
+    <div class="card-body bg-primary">
+        <div class="row">
+            {{#each caixas}}
+            <div class="col-sm-4">
+                <div class="text-white bg-dark card mt-4 ">
+
+                    <div class="card-body">
+                        <div id="dataCaixa">
+                            <div class="row">
+                                <img src="/img/calendario.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Data do Caixa: <b>  {{data}} </b> </h5>
+                            </div>
+                        </div>
+                        <div id="Lucro">
+                            <div class="row">
+                                <img src="/img/mais.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Lucro: <b> R$ {{lucroTotal}} </b> </h5>
+                            </div>
+                        </div>
+                        <div id="Despesa">
+                            <div class="row">
+                                <img src="/img/menos.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Despesa: <b> R$ {{despesaTotal}} </b>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="bg-white text-dark" id="SaldoTotal">
+                            <h5 class="mt-3"><b> Saldo: </b> R$ {{saldoTotal}} </h5>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        {{else}}
+
+        {{/each}}
+
+        <div class="col-sm-4">
+                <div class="text-black bg-white card mt-4 ">
+
+                    <div class="card-body">
+                        <div id="datasCaixa">
+                            <div class="row">
+                                <img src="/img/calendario_pretobranco.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> <b>  {{datas.dataInicial}} até {{datas.dataFinal}} </b> </h5>
+                            </div>
+                        </div>
+                        <div id="Lucro">
+                            <div class="row">
+                                <img src="/img/mais.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Lucro Total: <b> R$ {{total.lucro}} </b> </h5>
+                            </div>
+                        </div>
+                        <div id="Despesa">
+                            <div class="row">
+                                <img src="/img/menos.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Despesa Total: <b> R$ {{total.despesa}} </b>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="bg-secondary text-white" id="SaldoTotal">
+                            <h5 class="mt-3"><b> Saldo Total: </b> R$ {{total.saldo}} </h5>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+    </div>
+    
+    {{else}}
+    
+    {{/if}}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var hoje = new Date()
+            var dia = hoje.getDate()
+            var mes = hoje.getMonth() + 1
+            var ano = hoje.getFullYear()
+            if (parseInt(dia) < 10) {
+                dia = "0" + dia
+            }
+            if (parseInt(mes) < 10) {
+                mes = "0" + mes
+            }
+
+            var datadeHoje = ano + "-" + mes + "-" + dia
+            $("#dataInicio").val(datadeHoje)
+            $("#dataFinal").val(datadeHoje)
+        })
+    </script>

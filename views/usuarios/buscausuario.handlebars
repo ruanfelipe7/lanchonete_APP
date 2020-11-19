@@ -1,0 +1,62 @@
+
+<div class="card">
+    <div align="center" class="card-header text-white bg-info ">
+        <div class="row">
+            <img src="/img/usuarios2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Buscar Usuário</h2>
+        </div>
+    </div>    
+    <div class="card-body">
+        <form method="POST" action="pesquisa" class="form-inline my-2 my-lg-0">
+            <input name="busca" class="form-control mr-sm-2" type="text" placeholder="Pesquisar Usuário" aria-label="Pesquisar Usuário">
+            <select name="opcao" class="form-control mr-sm-2" id="exampleFormControlSelect1">
+                <option value="0">Nome</option>
+                <option value="1">E-mail</option>
+                <option value="2">Nome de Usuário</option>
+            </select>    
+            <button class="btn btn-primary my-2 my-sm-0" type="submit"> <img src="/img/search.png" alt="Deletar Receita"
+                    width="20" height="20"> Buscar</button>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered table-secondary">
+  <thead>
+    <tr align="center">
+      <th scope="col">Nome</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Nome de Usuário</th>
+      <th scope="col">Ações</th>  
+    </tr>
+  </thead>
+  <tbody>
+      {{#each usuarios}} 
+        <tr>
+        <td align="center">
+            <p>{{nome}}</p>
+        </td>
+        <td align="center">{{email}}</td>
+        <td align="center">{{admin}}</td>
+        <td align="center">{{nomeUsuario}}</td>     
+        <td align="center">
+            <div class="">
+                <form class="d-inline p-2" action="editar" method="POST">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button type="submit" class="btn btn-info" title="Editar Usuário"><img src="/img/pencil.png"  alt="Editar Usuário" width="20" height="20"> Editar </button>
+                </form>
+                <form class="d-inline p-2" action="deletar" method="POST">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button class="btn btn-info" title="Deletar Usuário" ><img src="/img/delete.png" alt="Deletar Usuário" width="20" height="20"> Excluir </button>
+                </form>
+            </div>
+            
+        </td>
+        </tr>
+    {{else}}
+
+    {{/each}}  
+
+     
+  </tbody>
+</table>

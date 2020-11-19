@@ -1,0 +1,61 @@
+
+<div class="card">
+    <div align="center" class="card-header text-white bg-info ">
+        <div class="row">
+            <img src="/img/burger2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Buscar Lanche</h2>
+        </div>
+    </div>    
+    <div class="card-body">
+        <form method="POST" action="pesquisa" class="form-inline my-2 my-lg-0">
+            <input name="busca" class="form-control mr-sm-2" type="text" placeholder="Pesquisar Lanche" aria-label="Pesquisar Lanche">
+            <select name="opcao" class="form-control mr-sm-2" id="exampleFormControlSelect1">
+                <option value="0">Nome</option>
+                <option value="1">Preço</option>
+                <option value="2">Ingrediente</option>
+            </select>    
+            <button class="btn btn-primary my-2 my-sm-0" type="submit"> <img src="/img/search.png" alt="Deletar Receita"
+                    width="20" height="20"> Buscar</button>
+        </form>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered table-secondary">
+  <thead>
+    <tr align="center">
+      <th scope="col">Lanche</th>
+      <th scope="col">Tipo de Pão</th>
+      <th scope="col">Preço</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each lanches}} 
+        <tr>
+        <td>
+            <p>{{nome}}</p>
+            <small>{{ingredientes}}</small>
+        </td>
+        <td align="center">{{tipoDePao}}</td>
+        <td align="center">{{preco}}</td>
+        <td align="center">
+            <div class="">
+                <form class="d-inline p-2" action="editar" method="POST">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button type="submit" class="btn btn-info" title="Editar Lanche"><img src="/img/pencil.png"  alt="Editar Lanche" width="20" height="20"> Editar </button>
+                </form>
+                <form class="d-inline p-2" action="deletar" method="POST">
+                    <input type="hidden" name="id" value="{{_id}}">
+                    <button class="btn btn-info" title="Deletar Lanche" ><img src="/img/delete.png" alt="Deletar Lanche" width="20" height="20"> Excluir </button>
+                </form>
+            </div>
+            
+        </td>
+        </tr>
+    {{else}}
+
+    {{/each}}  
+
+     
+  </tbody>
+</table>

@@ -1,0 +1,91 @@
+<div align="center">
+    <div class="card-header text-white bg-info ">
+        <div class="row">
+            <img src="/img/caixa-registradora2.png" alt="" width="50" height="50">
+            <h2 style="margin-left: 10px;" class="mt-1">Caixa do dia </h2>
+            <h2 class="mt-1" style="margin-left: 10px;" >- {{data_de_hoje}}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="card-body bg-primary">
+    <div class="row">
+    {{#each receitas}}
+        <div class="col-sm-6">
+                <div class="text-dark bg-white card mt-4 ">       
+                    
+                    <div class="card-body">
+                        
+                        <div id="tipoDaReceita">
+                            <div class="row">
+                                {{#if tipoDeReceita}}
+                                    <img src="/img/mais.png" alt="" width="30" height="30">
+                                {{else}}
+                                    <img src="/img/menos.png" alt="" width="30" height="30">
+                                {{/if}}
+                                <h5 style="margin-left: 10px;" class="mt-1"> Tipo da Receita: <b> {{tipo}} </b>  </h5>
+                            </div>
+                        </div>
+                        <div class="mt-2" id="descricaoReceita">
+                            <div class="row">
+                                <img src="/img/documento.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"><u>Descrição:</u>  {{descricao}}   </h5>    
+                            </div>
+                                
+                        </div>
+                        <div class="bg-dark text-white" id="ValorReceita">
+                            <h5 class="mt-3"><b>Valor: </b> R$ {{valor}} </h5>
+                        </div>
+
+                    
+                    
+                    </div>
+                </div>
+            </div>
+
+
+    {{else}}
+
+    {{/each}}
+    
+    <div class="col-sm-6">
+                <div class="text-white bg-dark card mt-4 ">       
+                    
+                    <div class="card-body">
+                        
+                        <div id="">
+                            <div class="row">
+                                <img src="/img/mais.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Lucro Total:  <b> R$ {{total.lucro}} </b>  </h5>
+                            </div>
+                        </div>
+                        <div id="">
+                            <div class="row">
+                                <img src="/img/menos.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Despesa Total: <b> R$ {{total.despesa}} </b>  </h5>
+                            </div>
+                        </div>
+                        <div class="bg-white text-dark" id="SaldoTotal">
+                            <h5 class="mt-3"><b>Saldo Total: </b> R$ {{total.saldo}} </h5>
+                        </div>
+
+                        <div class="mt-4" align="center">
+                             <form class="d-inline p-2" action="finalizar" method="POST">
+                                 <input type="hidden" name="lucroTotal" value="{{totalValor.lucro}}">
+                                 <input type="hidden" name="despesaTotal" value="{{totalValor.despesa}}">
+                                 <input type="hidden" name="saldoTotal" value="{{totalValor.saldo}}">
+                                 
+                                <button style="margin-left: auto;" type="submit" alt="Finalizar Caixa" class="btn btn-info"> <img src="/img/concluir.png" width="20" height="20">Finalizar Caixa</button>
+                             </form>    
+                        </div>
+                    
+                    
+                    </div>
+                </div>
+            </div>
+
+
+</div>
+
+
+</div>

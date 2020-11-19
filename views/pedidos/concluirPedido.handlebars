@@ -1,0 +1,77 @@
+<div class="mt-4 text-white card bg-primary">
+    <div class="card-header bg-info ">
+        <div class="row">
+            <img src="/img/order2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Concluir Pedido</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="text-white card mt-4 "
+                    {{#if pedido.status}}
+                        style="background-color: forestgreen" 
+                    {{else}}
+                        style="background-color: navy"
+
+                    {{/if}}
+                    >       
+                    
+                    <div class="card-body">
+                        <div id="nomeCliente">
+                            <div class="row">
+                                <img src="/img/pedido.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Cliente: <b> {{pedido.cliente}} </b>  </h5>
+                            </div>
+                        </div>
+                        <div id="dataPedido">
+                            <div class="row">
+                                <img src="/img/calendario.png" alt="" width="30" height="30">
+                                <h5 style="margin-left: 10px;" class="mt-1"> Data: <b> {{pedido.data}} </b>  </h5>
+                            </div>
+                        </div>
+                        <div class="mt-2" id="conteudoPedido">
+                            {{#each pedido.descricao}}
+                                <p>{{quantidade}} {{nomeLanche}} - {{tipoDePao}} - R$ {{subtotal}}  
+                                    {{#if observacoes}}
+                                        <small>Observações: {{observacoes}}</small>
+                                    {{else}}
+                                    {{/if}}   
+                                </p>
+                                
+                            {{else}}
+
+                            {{/each}}
+
+                            {{#each extra}}
+                                <p> <u>Extra:</u>  {{extra}} - R${{valorExtra}}</p>
+                            {{else}}
+
+                            {{/each}}
+
+                        </div>
+                        <div class="bg-secondary" id="totalPedido">
+                            <h5 class="mt-3"><b>Total: </b> R$ {{pedido.total}} </h5>
+                        </div>
+
+                    
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 mt-4">
+                <form action="concluirPedido" method="POST">
+                    <input type="hidden" name="id" value="{{pedido._id}}" >
+                    <h2>Deseja finalizar o pedido do cliente {{pedido.cliente}}?</h2>
+                    
+                    <div align="center">
+                        <button type="submit" title="Concluir Pedido" class="btn"> <img src="/img/correct.png" height="100" width="100" alt="Concluir Pedido" > </button>
+                        <button type="button" onclick="location.href = document.referrer;" title="Cancelar" class="btn"> <img src="/img/cancel.png" height="100" width="100" alt="Deletar Lanche" >  </button>
+                    </div>
+                </form>   
+            </div>
+        
+        </div>
+        
+    </div>   
+</div>

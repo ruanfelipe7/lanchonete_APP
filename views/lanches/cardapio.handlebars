@@ -1,0 +1,29 @@
+<div align="center" class="card-header text-white bg-info ">
+        <div class="row">
+            <img src="/img/burger2.png" alt="" width="50" height="50" >
+            <h2 style="margin-left: 10px;" class="mt-1">Cardápio</h2>
+        </div>
+</div>
+<table class="table table-hover table-secondary">
+  <thead>
+    <tr align="center">
+      <th scope="col">Lanche</th>
+      <th scope="col">Preço - Pão Bola</th>
+      <th scope="col">Preço - Pão Árabe</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each lanches}} 
+        <tr>
+        <td>
+            <p>{{nome}}</p>
+            <small>{{ingredientes}}</small>
+        </td>
+        <td align="center">{{preco}}</td>
+        <td align="center">{{preco2}}</td>
+        </tr>
+    {{else}}
+
+    {{/each}}    
+  </tbody>
+</table>

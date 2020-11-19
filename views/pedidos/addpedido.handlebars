@@ -1,0 +1,232 @@
+{{#each erros}}
+<div class="alert alert-danger"> {{texto}} </div>
+{{else}}
+
+{{/each}}
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="mt-4 text-white card bg-primary">
+            <div class="card-header bg-info ">
+                <div class="row">
+                    <img src="/img/order2.png" alt="" width="50" height="50">
+                    <h2 style="margin-left: 10px;" class="mt-1">Novo Pedido</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <label class="mt-2" for="nome">Nome do Cliente: </label>
+
+                <input type="text" id="cliente" name="cliente" class="form-control " required>
+                <label class="mt-2" for="Tipo de Pao"> Selecionar Lanche: </label>
+
+                <select class="form-control" name="idLanche" id="lanche">
+                    {{#each lanches}}
+                    <option id="teste" value="{{_id}};{{nome}};{{tipoDePao}};{{preco}}">{{nome}} - {{tipoDePao}}
+                    </option>
+                    {{else}}
+                    <option value="0">Nenhum Lanche Cadastrado</option>
+                    {{/each}}
+                </select>
+
+                <label class="mt-2" for="quantidade">Quantidade: </label>
+                <input type="number" id="quantidade" name="quantidade" class="form-control" step="1" value="1" required>
+                
+                <label class="mt-2" for="observacoes">Observações: </label>
+                <input type="text" id="observacoes" name="observacoes" class="form-control" required>
+                <br>
+
+
+
+                <div align="right">
+                    <button type="button" id="btnAdicionarLanche" class="btn btn-secondary"> Adicionar ao Pedido
+                    </button>
+                </div>
+
+                <label class="mt-2" for="nome">Adicionar ingrediente Extra: </label>
+                <input type="text" id="extra" name="extra" class="form-control ">
+                <label class="mt-2" for="nome">Valor Extra:</label>
+                <input type="number" step="0.01" id="valorExtra" name="valorExtra" class="form-control ">
+                <br>
+                <div align="right">
+                    <button type="button" id="btnAdicionarExtra" class="btn btn-secondary"> Adicionar ao Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="text-white card bg-primary mt-4">
+            <div class="card-header bg-info ">
+                <div class="row">
+                    <img src="/img/order2.png" alt="" width="50" height="50">
+                    <h2 style="margin-left: 10px;" class="mt-1">Pedido Atual</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="nomeCliente">
+
+                </div>
+                <div id="conteudoPedido">
+
+                </div>
+                <div class="bg-dark" id="totalPedido">
+
+                </div>
+                <form id="formularioPedido" action="novoPedido" method="POST">
+                    <input type="hidden" name="clienteNome" id="clienteNome" value="">
+                    <input type="hidden" name="descricao_anterior" value="" id="descricao_anterior">
+                    <input type="hidden" name="total" value="0" id="total">
+                    <input type="hidden" value="" name="extraPedido" id="extraPedido">
+                    
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script type="text/javascript">
+    function mascaraDePreco(preco) {
+        stringPreco = preco.toString().replace('.', ',')
+        var i = stringPreco.indexOf(",")
+        tamanho = stringPreco.length
+        var substringPreco
+        if(i == -1){
+            stringPreco = stringPreco.concat(",00")
+        }else{  
+            substringPreco = stringPreco.substr(i+1, tamanho)
+            if(substringPreco.length < 2){
+                stringPreco = stringPreco.concat("0")
+            }
+        }
+        return stringPreco
+    }
+
+    $("#btnAdicionarLanche").click(function () {
+        var nomeCliente = $("#cliente").val();
+        var descricaoAnterior = $("#descricao_anterior").val();
+        var quantidade = $("#quantidade").val();
+        var lancheSelecionado = $("#lanche").val();
+        var totalPedido = parseFloat($("#total").val());
+        var extraPedido = $("#extraPedido").val();
+        var observacoes = $("#observacoes").val();
+        var partesLanche = lancheSelecionado.split(";")
+        var novaDescricao = partesLanche[0]+"\\"+partesLanche[1]+"\\"+partesLanche[2];
+        var nomeLanche = partesLanche[1];
+        var tipoDePao = partesLanche[2];
+        var preco = partesLanche[3];
+        var subtotal = preco * quantidade;
+        
+        novaDescricao = novaDescricao + "\\" + subtotal
+        novaDescricao = novaDescricao + "\\" + quantidade + "\\" + observacoes;
+        
+        totalPedido += subtotal;
+
+        if (nomeCliente == "" || nomeCliente == null || quantidade == "") {
+            alert("Preencha os campos obrigatórios: Nome do Cliente e Quantidade" );
+            return;
+        }
+        if(quantidade <= 0 || Math.ceil(quantidade) != quantidade){
+            alert("Quantidade inválida");
+            $("#quantidade").val(1)
+            return;
+        }
+        if (descricaoAnterior == "" && extraPedido == "") {
+            $("#nomeCliente").append("<h5> <u> Cliente:</u> " + nomeCliente + "</h5>");
+            if(observacoes != ""){
+                $("#conteudoPedido").append("<br><p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + observacoes + " - " + "R$ "  + mascaraDePreco(subtotal) + "</p>")
+            }else{
+                $("#conteudoPedido").append("<br><p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + "R$ "  + mascaraDePreco(subtotal) + "</p>")
+            }
+            
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + "R$ " + mascaraDePreco(totalPedido) + "</h5>")
+            $("#formularioPedido").append("<div class='mt-3' align='center'>" +
+                "<button type='submit' class='btn btn-secondary'> Salvar Pedido </button>" +
+                "<a href='/home'><button type='button' style='margin-left:20px;' class='btn btn-secondary'> Cancelar </button></a>" +
+                "</div>");
+            descricaoAnterior = novaDescricao    
+        } else if(descricaoAnterior == "") {
+            descricaoAnterior = novaDescricao;
+            if(observacoes != ""){
+                $("#conteudoPedido").append("<p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + observacoes + " - " + "R$ "  + mascaraDePreco(subtotal) + "</p>")
+            }else{
+                $("#conteudoPedido").append("<p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + "R$ " + mascaraDePreco(subtotal) + "</p>")
+            }
+            $("#novoH5").remove();
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + "R$ " + mascaraDePreco(totalPedido) + "</h5>")
+        }else{    
+            descricaoAnterior = descricaoAnterior + ";" + novaDescricao;
+            if(observacoes != ""){
+                $("#conteudoPedido").append("<p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + observacoes + " - " + "R$ "  + mascaraDePreco(subtotal) + "</p>")
+            }else{
+                $("#conteudoPedido").append("<p>" + quantidade + " " + nomeLanche + " - " +  tipoDePao + " - " + "R$ " + mascaraDePreco(subtotal) + "</p>")
+            }
+            $("#novoH5").remove();
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + "R$ " + mascaraDePreco(totalPedido) + "</h5>")
+        }
+
+        $("#descricao_anterior").val(descricaoAnterior);
+        $("#cliente").attr('readonly', 'readonly');
+        $("#total").val(totalPedido)
+        $("#clienteNome").val(nomeCliente)
+        $("#observacoes").val("")
+        $("#quantidade").val(1)
+
+
+    });
+
+    $("#btnAdicionarExtra").click(function(){
+        var extra = $("#extra").val();
+        var valorExtra = parseFloat($("#valorExtra").val());
+        var nomeCliente = $("#cliente").val();
+        var descricao_anterior = $("#descricao_anterior").val();
+        var novoExtra;
+
+        if(extra == "" || extra == null || valorExtra == null || valorExtra.toString() == "NaN" || nomeCliente == "" || nomeCliente == null){
+            alert("Preencha os campos obrigatórios: Nome do Cliente, Extra, Valor Extra" );
+            return;
+        }
+        if(valorExtra <= 0){
+            alert("Valor de Extra Inválido");
+            $("#valorExtra").val("");
+            return;
+        }
+        var extraPedido = $("#extraPedido").val();
+        var valorExtraPedido = parseFloat($("#valorExtraPedido").val());
+        var totalPedido = parseFloat($("#total").val());
+
+        novoExtra = extra + "&" + valorExtra    
+        totalPedido += valorExtra;
+        
+        if(extraPedido == "" && descricao_anterior == ""){
+            $("#nomeCliente").append("<h5> <u> Cliente:</u> " + nomeCliente + "</h5>");
+            $("#conteudoPedido").append("<br><p>" + extra + " - " + mascaraDePreco(valorExtra) + "</p>")
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + mascaraDePreco(totalPedido) + "</h5>")
+            $("#formularioPedido").append("<div class='mt-3' align='center'>" +
+                "<button type='submit' class='btn btn-secondary'> Salvar Pedido </button>" +
+                "<a href='/home'><button type='button' style='margin-left:20px;' class='btn btn-secondary'> Cancelar </button></a>" +
+                "</div>");
+            extraPedido = novoExtra    
+        }else if(extraPedido == ""){
+            extraPedido = novoExtra;
+            $("#conteudoPedido").append("<p>" + extra + " - " + mascaraDePreco(valorExtra) + "</p>") 
+            $("#novoH5").remove();
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + mascaraDePreco(totalPedido) + "</h5>")
+        }else{
+            extraPedido = extraPedido + "\\" + novoExtra;               
+             $("#conteudoPedido").append("<p>" + extra + " - " + mascaraDePreco(valorExtra) + "</p>") 
+            $("#novoH5").remove();
+            $("#totalPedido").append("<h5 id='novoH5'><b>Total: </b>" + mascaraDePreco(totalPedido) + "</h5>")
+        }
+        $("#extraPedido").val(extraPedido);
+        $("#total").val(totalPedido);
+        $("#clienteNome").val(nomeCliente)
+        $("#cliente").attr('readonly', 'readonly');
+        $("#extra").val("")
+        $("#valorExtra").val("")
+    });
+
+
+</script>
