@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs")
 
 //Configurando o mongoose
     mongoose.Promise = global.Promise
-    mongoose.connect("mongodb+srv://ruan_felipe07:sitedalanchoneteapppassword0728@cluster0.p4eke.mongodb.net/lanchoneteAPP?retryWrites=true&w=majority", {
+    mongoose.connect("mongodb://localhost/lanchoneteAPP", {
         useNewUrlParser: true
     }).then(() => {
         console.log("Conecatado ao banco de dados com sucesso");

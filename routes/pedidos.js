@@ -7,7 +7,7 @@ require('../models/Lanche')
 require('../models/Receita')
 const Pedido = mongoose.model("pedidos")
 const Lanche = mongoose.model("lanches")
-const Receita = mongoose.model("receitas")
+const Receita = mongoos.model("receitas")
 
 function mascaraDePreco(preco) {
     stringPreco = preco.toString().replace('.', ',')
