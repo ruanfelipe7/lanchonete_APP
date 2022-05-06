@@ -125,36 +125,6 @@ router.get('/cardapio', checarAutenticacao, (req, res) => {
     })
 })
 
-router.get('/ver-cardapio', (req, res) => {
-    Lanche.find().sort({chave: "asc"}).lean().then((lanches) => {
-        lanches_alterados = []
-        let preco
-        ctrl = false
-        for(const aux of lanches){
-            preco = aux.preco
-            preco = mascaraDePreco(preco)
-            if(ctrl){   
-               novos_lanches.preco2 = preco
-               ctrl = false
-               lanches_alterados.push(novos_lanches)
-            }else{
-                novos_lanches = {
-                    nome: aux.nome,
-                    ingredientes: aux.ingredientes,
-                    preco: preco,
-                    preco2: "0"
-                }
-                ctrl = true
-            }
-        }
-        res.render("lanches/cardapio", {lanches: lanches_alterados})
-    }).catch((err) => {
-        req.flash("error_msg", "Erro ao carregar o cardápio")
-        res.redirect("/home")
-        console.log(err)
-    })
-})
-
 router.get('/pesquisa', checarAutenticacao, (req, res) => {
     res.render("lanches/buscalanche")
 })
