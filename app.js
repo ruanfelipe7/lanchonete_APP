@@ -49,7 +49,8 @@
     //Mongoose       
         mongoose.Promise = global.Promise
         mongoose.connect(db.mongoURI, {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useUnifiedTopology: true 
         }).then(() => {
             console.log("Conectado ao mongo")   
         }).catch((err) => {

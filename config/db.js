@@ -1,3 +1,2 @@
 const { mongo } = require("mongoose");
-    module.exports = {mongoURI: "mongodb://localhost/lanchoneteAPP"}
-//}
+module.exports = {mongoURI: process.env.MONGODB_URI}    
