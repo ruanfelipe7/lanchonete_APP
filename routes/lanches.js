@@ -95,7 +95,7 @@ router.post('/novo', checarAutenticacao, (req, res) => {
 })
 
 
-router.get('/cardapio', checarAutenticacao, (req, res) => {
+router.get('/cardapio', (req, res) => {
     Lanche.find().sort({chave: "asc"}).lean().then((lanches) => {
         lanches_alterados = []
         let preco
