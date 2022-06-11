@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 require('../models/Receita')
 const Receita = mongoose.model("receitas")
 const {checarAdmin} = require('../config/checarAdmin')
+const timezoneOffset = 180;
 
 function mascaraDePreco(preco) {
     stringPreco = preco.toString().replace('.', ',')
@@ -65,7 +66,7 @@ router.post('/novo', checarAdmin, (req, res) => {
         res.render("receitas/addReceita", {erros: erros})
     }else{
         let d = new Date();
-        let data = new Date(d.valueOf() - d.getTimezoneOffset() * 60000)
+        let data = new Date(d.valueOf() - timezoneOffset * 60000)
         let dataFormulario = Date.parse(req.body.data)
         let dataReceita = new Date(dataFormulario)
         

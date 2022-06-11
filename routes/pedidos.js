@@ -8,6 +8,7 @@ require('../models/Receita')
 const Pedido = mongoose.model("pedidos")
 const Lanche = mongoose.model("lanches")
 const Receita = mongoose.model("receitas")
+const timezoneOffset = 180;
 
 function mascaraDePreco(preco) {
     stringPreco = preco.toString().replace('.', ',')
@@ -112,7 +113,7 @@ router.post('/novoPedido', checarAutenticacao, (req, res) => {
     }
 
     let d = new Date();
-    let data = new Date(d.valueOf() - d.getTimezoneOffset() * 60000)
+    let data = new Date(d.valueOf() - timezoneOffset * 60000)
 
     var novoPedido = {
         cliente: req.body.clienteNome,
@@ -141,7 +142,7 @@ router.post('/novoPedido', checarAutenticacao, (req, res) => {
 router.get('/pedidos_do_dia', checarAutenticacao, (req, res) => {
     Pedido.find().sort({ _id: "asc" }).lean().then((pedidos) => {
         let d = new Date();
-        let date = new Date(d.valueOf() - d.getTimezoneOffset() * 60000) 
+        let date = new Date(d.valueOf() - timezoneOffset * 60000) 
         let dia = date.getDate()
         let mes = date.getMonth() + 1
         let ano = date.getFullYear()

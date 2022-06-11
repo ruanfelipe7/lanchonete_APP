@@ -6,6 +6,7 @@ require('../models/Receita')
 const Caixa = mongoose.model("caixas")
 const Receita = mongoose.model("receitas")
 const {checarAdmin} = require('../config/checarAdmin')
+const timezoneOffset = 180;
 
 function mascaraDePreco(preco) {
     stringPreco = preco.toString().replace('.', ',')
@@ -105,7 +106,7 @@ router.get('/caixa_do_dia', checarAdmin, (req, res) => {
 
 router.post('/finalizar', checarAdmin, (req, res) => {
     let d = new Date();
-    let data_de_hoje = new Date(d.valueOf() - d.getTimezoneOffset() * 60000)
+    let data_de_hoje = new Date(d.valueOf() - timezoneOffset * 60000)
     var lucroTotal = parseFloat(req.body.lucroTotal)
     var despesaTotal = parseFloat(req.body.despesaTotal)
     var saldoTotal = parseFloat(req.body.saldoTotal)
